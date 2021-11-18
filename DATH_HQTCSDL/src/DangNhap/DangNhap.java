@@ -127,6 +127,7 @@ public class DangNhap extends JFrame {
 		int numberColumn = kn.getNumberColumn();
 		Vector<String> row = null;
 		boolean found = false;
+		boolean lock = false;
 		
 		try {
 			while(rs.next()) {
@@ -137,6 +138,7 @@ public class DangNhap extends JFrame {
 				
 				if(row.get(0).equals(usernameString) && row.get(1).equals(passString)) {
 					found = true;
+					lock = row.get(3).equals("1");
 					break;
 				}
 			}
@@ -157,8 +159,13 @@ public class DangNhap extends JFrame {
 					"lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		classification(row.get(2));
+		else if(!lock) {
+			JOptionPane.showMessageDialog(this, "Tài khoản đã bị khóa",
+					"lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
 		
+		classification(row.get(2));
 	}
 
 	protected void classification(String type) {

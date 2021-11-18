@@ -89,7 +89,7 @@ public class DoiTuong_QuanTri {
 	public boolean suaTaiKhoan(DoiTuong_QuanTri tk, String taikhoan, String matkhau) {
 		KetNoi kn = new KetNoi(taikhoan, matkhau);
 		boolean result = false;
-		String sql = "UPDATE NGUOIDUNG TAIKHOAN=?, MATKHAU=?, PHANHE=?, TINHTRANG=? "
+		String sql = "UPDATE NGUOIDUNG SET TAIKHOAN=?, MATKHAU=?, PHANHE=?, TINHTRANG=? "
 				+ "WHERE TAIKHOAN=?";
 		Connection cnn = kn.getConnection();
 		
@@ -99,7 +99,8 @@ public class DoiTuong_QuanTri {
 			stmt.setString(1, tk.getTaikhoan());
 			stmt.setString(2, tk.getMatkhau());
 			stmt.setString(3, tk.getPhanhe());
-			stmt.setString(3, tk.getTinhtrang());
+			stmt.setString(4, tk.getTinhtrang());
+			stmt.setString(5, tk.getTaikhoan());
 			
 			result = stmt.executeUpdate()>0;
 			stmt.close();
