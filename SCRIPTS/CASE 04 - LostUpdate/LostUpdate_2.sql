@@ -1,0 +1,4 @@
+-- TH2: Nhân viên A thực hiện thao tác "Kiểm tra danh sách các hợp đồng có thời gian hiệu lực kết thúc vào năm 2020". 
+--Nhân viên A cập nhật thời gian hiệu lực của Hợp đồng số 1 thành năm 2021. 
+--Cùng thời điểm đó, Nhân viên B thực hiện thao tác "Cập nhật tất cả các hợp đồng có thời hạn năm 2020 thành thời hạn năm 2022". 
+--Việc này làm Hợp đồng số 1 của Nhân viên A vừa cập nhật đã bị chuyển thành năm 2022.
