@@ -1,6 +1,6 @@
 --Lấy danh sách chi nhánh của DOITAC
---CREATE 
-ALTER
+CREATE 
+--ALTER
 PROC USP_LayDSCN
     @MST CHAR(20)
 AS

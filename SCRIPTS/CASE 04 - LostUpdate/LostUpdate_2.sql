@@ -1,4 +1,42 @@
--- TH2: Nhân viên A thực hiện thao tác "Kiểm tra danh sách các hợp đồng có thời gian hiệu lực kết thúc vào năm 2020". 
---Nhân viên A cập nhật thời gian hiệu lực của Hợp đồng số 1 thành năm 2021. 
---Cùng thời điểm đó, Nhân viên B thực hiện thao tác "Cập nhật tất cả các hợp đồng có thời hạn năm 2020 thành thời hạn năm 2022". 
---Việc này làm Hợp đồng số 1 của Nhân viên A vừa cập nhật đã bị chuyển thành năm 2022.
+--CẬP NHẬT NGƯỜI ĐẠI DIỆN
+CREATE 
+--ALTER
+PROC USP_CAPNHATNGUOIDAIDIEN
+	@MST CHAR(20),
+    @DAIDIENMOI NVARCHAR(50)
+AS
+BEGIN TRAN
+	DECLARE @DAIDIEN NVARCHAR(50) = (SELECT NGUOIDAIDIEN
+							        FROM DOITAC 
+							        WHERE MST = @MST)
+	PRINT N'NGƯỜI ĐẠI DIỆN HIỆN TẠI: ' + @DAIDIEN
+	WAITFOR DELAY '0:0:10'
+
+	BEGIN TRY
+		UPDATE DOITAC
+		SET NGUOIDAIDIEN = @DAIDIENMOI
+		WHERE MST = @MST
+
+        UPDATE HOPDONG
+		SET NGUOIDAIDIEN = @DAIDIENMOI
+		WHERE MST = @MST
+
+        UPDATE DANGKY
+		SET NGUOIDAIDIEN = @DAIDIENMOI
+		WHERE MST = @MST
+
+        UPDATE CHINHANH
+		SET NGUOIDAIDIEN = @DAIDIENMOI
+		WHERE MST = @MST
+
+	END TRY
+	BEGIN CATCH 
+		DECLARE @ErrorMsg VARCHAR(2000)
+		SELECT @ErrorMsg = N'Lỗi: ' + ERROR_MESSAGE()
+		RAISERROR(@ErrorMsg, 16,1)
+		ROLLBACK TRAN
+		RETURN
+	END CATCH
+	PRINT N'NGƯỜI ĐẠI DIỆN : ' + @DAIDIENMOI
+	PRINT N'CẬP NHẬT NGƯỜI ĐẠI DIỆN THÀNH CÔNG'
+COMMIT TRAN
