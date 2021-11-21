@@ -56,7 +56,7 @@ public class DoiTuong_HopDong {
 		KetNoi kn = new KetNoi(taikhoan, matkhau);
 		boolean result = false;
 		String sql = "UPDATE HOPDONG SET THGIANIEULUC=?, PHIHOAHONG=?, KICHHOAT=? "
-				+ "WHERE MST=? AND NGUOIDAIDIEN=? AND MAHD=?";
+				+ "WHERE MST=? AND MAHD=?";
 		Connection cnn = kn.getConnection();
 		
 		try {
@@ -67,9 +67,8 @@ public class DoiTuong_HopDong {
 			stmt.setString(3, hopdong_sua.getKichhoat());
 
 			
-			stmt.setString(5, hopdong_nhap.getMst());
-			stmt.setString(6, hopdong_nhap.getNguoidaidien());
-			stmt.setString(7, hopdong_nhap.getMahd());
+			stmt.setString(4, hopdong_nhap.getMst());
+			stmt.setString(5, hopdong_nhap.getMahd());
 			
 			result = stmt.executeUpdate()>0;
 			stmt.close();

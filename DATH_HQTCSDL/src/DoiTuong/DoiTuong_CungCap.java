@@ -73,15 +73,14 @@ public class DoiTuong_CungCap {
 	public boolean xoaCungCap(DoiTuong_CungCap cc, String taikhoan, String matkhau) {
 		KetNoi kn = new KetNoi(taikhoan, matkhau);
 		boolean result = false;
-		String sql = "DELETE FROM CHINHANH WHERE MST=? AND NGUOIDAIDIEN=? AND MACHINHANH=? AND MASP=?";
+		String sql = "DELETE FROM CHINHANH WHERE MST=? AND MACHINHANH=? AND MASP=?";
 		Connection cnn = kn.getConnection();
 		
 		try {
 			PreparedStatement stmt = cnn.prepareStatement(sql);
 			
 			stmt.setString(1, cc.getMst());
-			stmt.setString(2, cc.getNguoidaidien());
-			stmt.setString(3, cc.getMachinhanh());
+			stmt.setString(2, cc.getMachinhanh());
 			stmt.setString(3, cc.getMasp());
 			
 			result = stmt.executeUpdate()>0;
@@ -100,7 +99,7 @@ public class DoiTuong_CungCap {
 		KetNoi kn = new KetNoi(taikhoan, matkhau);
 		boolean result = false;
 		String sql = "UPDATE CHINHANH SET MST=?, NGUOIDAIDIEN=?, MACHINHANH=?, MASP=?, GIASP=? "
-				+ "WHERE MST=? AND NGUOIDAIDIEN=? AND MACHINHANH=? AND MASP=?";
+				+ "WHERE MST=? AND MACHINHANH=? AND MASP=?";
 		Connection cnn = kn.getConnection();
 		
 		try {
@@ -112,9 +111,9 @@ public class DoiTuong_CungCap {
 			stmt.setString(4, cungcap_sua.getMasp());
 			stmt.setString(5, cungcap_sua.getGiasp());
 			
-			stmt.setString(5, cungcap_nhap.getMst());
-			stmt.setString(6, cungcap_nhap.getNguoidaidien());
-			stmt.setString(7, cungcap_nhap.getMasp());
+			stmt.setString(6, cungcap_nhap.getMst());
+			stmt.setString(7, cungcap_nhap.getMachinhanh());
+			stmt.setString(8, cungcap_nhap.getMasp());
 			
 			result = stmt.executeUpdate()>0;
 			stmt.close();

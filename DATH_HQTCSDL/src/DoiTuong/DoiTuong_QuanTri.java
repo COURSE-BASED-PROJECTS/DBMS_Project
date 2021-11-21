@@ -94,6 +94,7 @@ public class DoiTuong_QuanTri {
 		String sql_3 = "ALTER ROLE "+tk.getPhanhe() + " ADD member "+tk.getTaikhoan();
 		String sql_4 = "ALTER LOGIN "+tk.getTaikhoan() + 
 				" WITH PASSWORD = '"+tk.getMatkhau()+"'";
+		System.out.print(tk.getMatkhau()+ tk.getTaikhoan());
 		
 		Connection cnn = kn.getConnection();
 		

@@ -26,7 +26,6 @@ public class Xoa_CungCap extends JFrame {
 	private JPanel contentPane;
 	private JTextField mst;
 	private JTextField machinhanh;
-	private JTextField nguoidaidien;
 	private JTextField masp;
 	private static String taikhoan="";
 	private static String matkhau="";
@@ -57,7 +56,7 @@ public class Xoa_CungCap extends JFrame {
 		setTitle("Xóa Cung Cấp");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 730, 465);
+		setBounds(100, 100, 730, 389);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -79,11 +78,6 @@ public class Xoa_CungCap extends JFrame {
 		machinhanh.setBounds(457, 88, 161, 51);
 		contentPane.add(machinhanh);
 		
-		nguoidaidien = new JTextField();
-		nguoidaidien.setColumns(10);
-		nguoidaidien.setBounds(124, 280, 494, 51);
-		contentPane.add(nguoidaidien);
-		
 		JButton btnNewButton = new JButton("Xóa");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -91,7 +85,7 @@ public class Xoa_CungCap extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnNewButton.setBounds(301, 357, 100, 54);
+		btnNewButton.setBounds(301, 270, 100, 54);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel_1 = new JLabel("Mã Số Thuế");
@@ -103,11 +97,6 @@ public class Xoa_CungCap extends JFrame {
 		lblNewLabel_1_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		lblNewLabel_1_1.setBounds(363, 96, 84, 32);
 		contentPane.add(lblNewLabel_1_1);
-		
-		JLabel lblNewLabel_1_2 = new JLabel("Người Đại Diện");
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2.setBounds(30, 288, 84, 32);
-		contentPane.add(lblNewLabel_1_2);
 		
 		JLabel lblNewLabel_1_4 = new JLabel("Mã Sản Phẩm");
 		lblNewLabel_1_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -122,7 +111,6 @@ public class Xoa_CungCap extends JFrame {
 	protected void do_btnNewButton_actionPerformed(ActionEvent e) {
 		DoiTuong_CungCap cc = new DoiTuong_CungCap();
 		cc.setMst(mst.getText());
-		cc.setNguoidaidien(nguoidaidien.getText());
 		cc.setMachinhanh(machinhanh.getText());
 		cc.setMasp(masp.getText());
 		

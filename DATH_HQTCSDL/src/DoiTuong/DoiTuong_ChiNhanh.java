@@ -67,15 +67,14 @@ public class DoiTuong_ChiNhanh {
 	public boolean xoaChiNhanh(DoiTuong_ChiNhanh cn, String taikhoan, String matkhau) {
 		KetNoi kn = new KetNoi(taikhoan, matkhau);
 		boolean result =false;
-		String sql = "DELETE FROM CHINHANH WHERE MST=? AND NGUOIDAIDIEN=? AND MACHINHANH=?";
+		String sql = "DELETE FROM CHINHANH WHERE MST=? AND MACHINHANH=?";
 		Connection cnn = kn.getConnection();
 		
 		try {
 			PreparedStatement stmt = cnn.prepareStatement(sql);
 			
 			stmt.setString(1, cn.getMst());
-			stmt.setString(2, cn.getNguoidaidien());
-			stmt.setString(3, cn.getMachinhanh());
+			stmt.setString(2, cn.getMachinhanh());
 			
 			result = stmt.executeUpdate()>0;
 			stmt.close();
@@ -93,7 +92,7 @@ public class DoiTuong_ChiNhanh {
 		KetNoi kn = new KetNoi(taikhoan, matkhau);
 		boolean result = false;
 		String sql = "UPDATE CHINHANH SET MST=?, NGUOIDAIDIEN=?, MACHINHANH=?, DIACHI=? "
-				+ "WHERE MST=? AND NGUOIDAIDIEN=? AND MACHINHANH=?";
+				+ "WHERE MST=? AND MACHINHANH=?";
 		Connection cnn = kn.getConnection();
 		
 		try {
@@ -105,8 +104,7 @@ public class DoiTuong_ChiNhanh {
 			stmt.setString(4, this.getDiachi());
 			
 			stmt.setString(5, cn.getMst());
-			stmt.setString(6, cn.getNguoidaidien());
-			stmt.setString(7, cn.getMachinhanh());
+			stmt.setString(6, cn.getMachinhanh());
 			
 			
 			result = stmt.executeUpdate()>0;
