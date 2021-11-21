@@ -32,7 +32,6 @@ public class CapNhat_HopDong extends JFrame {
 	private JPanel contentPane;
 	private JTextField mst_nhap;
 	private JTextField mahd_nhap;
-	private JTextField nguoidaidien_nhap;
 	private JTextField tghieuluc;
 	private JTextField phihoahong;
 	private final ButtonGroup thoigian = new ButtonGroup();
@@ -66,7 +65,7 @@ public class CapNhat_HopDong extends JFrame {
 		setTitle("Cập Nhật Hợp Đồng");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 745, 613);
+		setBounds(100, 100, 745, 543);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -80,7 +79,7 @@ public class CapNhat_HopDong extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Nh\u00E2\u0323p ", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 71, 711, 204);
+		panel.setBounds(10, 71, 711, 112);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -104,19 +103,9 @@ public class CapNhat_HopDong extends JFrame {
 		mahd_nhap.setBounds(466, 28, 161, 51);
 		panel.add(mahd_nhap);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Người Đại Diện");
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2.setBounds(30, 127, 84, 32);
-		panel.add(lblNewLabel_1_2);
-		
-		nguoidaidien_nhap = new JTextField();
-		nguoidaidien_nhap.setColumns(10);
-		nguoidaidien_nhap.setBounds(124, 121, 494, 51);
-		panel.add(nguoidaidien_nhap);
-		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "S\u01B0\u0309a", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 285, 711, 190);
+		panel_1.setBounds(10, 209, 711, 190);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -173,7 +162,7 @@ public class CapNhat_HopDong extends JFrame {
 			}
 		});
 		btnCpNht.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCpNht.setBounds(317, 500, 100, 54);
+		btnCpNht.setBounds(316, 425, 100, 54);
 		contentPane.add(btnCpNht);
 	}
 	protected void do_txtYyyymmdd_focusLost(FocusEvent e) {
@@ -186,7 +175,6 @@ public class CapNhat_HopDong extends JFrame {
 		DoiTuong_HopDong hd_sua = new DoiTuong_HopDong();
 		
 		hp_nhap.setMst(mst_nhap.getText());
-		hp_nhap.setNguoidaidien(nguoidaidien_nhap.getText());
 		hp_nhap.setMahd(mahd_nhap.getText());
 		
 		hd_sua.setTghieuluc(tghieuluc.getText());

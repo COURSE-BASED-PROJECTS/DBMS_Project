@@ -27,7 +27,6 @@ public class CapNhat_CungCap extends JFrame {
 	private JTextField mst_nhap;
 	private JTextField machinhanh_nhap;
 	private JTextField masp_nhap;
-	private JTextField nguoidaidien_nhap;
 	private JTextField mst_sua;
 	private JTextField machinhanh_sua;
 	private JTextField nguoidaidien_sua;
@@ -61,7 +60,7 @@ public class CapNhat_CungCap extends JFrame {
 		setTitle("Cập Nhật Cung Cấp");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 814, 742);
+		setBounds(100, 100, 814, 722);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -75,7 +74,7 @@ public class CapNhat_CungCap extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Nh\u00E2\u0323p", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 64, 780, 260);
+		panel.setBounds(10, 64, 780, 193);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -109,19 +108,9 @@ public class CapNhat_CungCap extends JFrame {
 		masp_nhap.setBounds(119, 111, 161, 51);
 		panel.add(masp_nhap);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Người Đại Diện");
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2.setBounds(28, 201, 84, 32);
-		panel.add(lblNewLabel_1_2);
-		
-		nguoidaidien_nhap = new JTextField();
-		nguoidaidien_nhap.setColumns(10);
-		nguoidaidien_nhap.setBounds(119, 193, 534, 51);
-		panel.add(nguoidaidien_nhap);
-		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "S\u01B0\u0309a", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 334, 780, 300);
+		panel_1.setBounds(10, 285, 780, 300);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -182,7 +171,7 @@ public class CapNhat_CungCap extends JFrame {
 			}
 		});
 		btnCpNht.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCpNht.setBounds(354, 641, 100, 54);
+		btnCpNht.setBounds(354, 609, 100, 54);
 		contentPane.add(btnCpNht);
 	}
 	protected void do_btnCpNht_actionPerformed(ActionEvent e) {
@@ -190,7 +179,6 @@ public class CapNhat_CungCap extends JFrame {
 		DoiTuong_CungCap cc_sua = new DoiTuong_CungCap();
 		
 		cc_nhap.setMst(mst_nhap.getText());
-		cc_nhap.setNguoidaidien(nguoidaidien_nhap.getText());
 		cc_nhap.setMachinhanh(machinhanh_nhap.getText());
 		cc_nhap.setMasp(masp_nhap.getText());
 		

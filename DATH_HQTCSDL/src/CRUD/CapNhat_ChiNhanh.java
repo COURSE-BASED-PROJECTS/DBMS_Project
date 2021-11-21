@@ -25,7 +25,6 @@ public class CapNhat_ChiNhanh extends JFrame {
 	private JPanel contentPane;
 	private JTextField mst_nhap;
 	private JTextField machinhanh_nhap;
-	private JTextField nguoidaidien_nhap;
 	private JTextField mst_sua;
 	private JTextField machinhanh_sua;
 	private JTextField nguoidaidien_sua;
@@ -58,7 +57,7 @@ public class CapNhat_ChiNhanh extends JFrame {
 		setTitle("Cập Nhật Chi Nhánh");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 784, 708);
+		setBounds(100, 100, 784, 602);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -72,7 +71,7 @@ public class CapNhat_ChiNhanh extends JFrame {
 		
 		JPanel panel = new JPanel();
 		panel.setBorder(new TitledBorder(null, "Nh\u00E2\u0323p", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel.setBounds(10, 64, 750, 247);
+		panel.setBounds(10, 64, 750, 124);
 		contentPane.add(panel);
 		panel.setLayout(null);
 		
@@ -96,19 +95,9 @@ public class CapNhat_ChiNhanh extends JFrame {
 		machinhanh_nhap.setBounds(464, 33, 161, 51);
 		panel.add(machinhanh_nhap);
 		
-		JLabel lblNewLabel_1_2 = new JLabel("Người Đại Diện");
-		lblNewLabel_1_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		lblNewLabel_1_2.setBounds(23, 144, 84, 32);
-		panel.add(lblNewLabel_1_2);
-		
-		nguoidaidien_nhap = new JTextField();
-		nguoidaidien_nhap.setColumns(10);
-		nguoidaidien_nhap.setBounds(117, 131, 508, 51);
-		panel.add(nguoidaidien_nhap);
-		
 		JPanel panel_1 = new JPanel();
 		panel_1.setBorder(new TitledBorder(null, "S\u01B0\u0309a", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-		panel_1.setBounds(10, 332, 750, 259);
+		panel_1.setBounds(10, 201, 750, 275);
 		contentPane.add(panel_1);
 		panel_1.setLayout(null);
 		
@@ -159,7 +148,7 @@ public class CapNhat_ChiNhanh extends JFrame {
 			}
 		});
 		btnCpNht.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCpNht.setBounds(331, 600, 100, 54);
+		btnCpNht.setBounds(327, 497, 100, 54);
 		contentPane.add(btnCpNht);
 	}
 	protected void do_btnCpNht_actionPerformed(ActionEvent e) {
@@ -167,7 +156,6 @@ public class CapNhat_ChiNhanh extends JFrame {
 		DoiTuong_ChiNhanh cn_sua = new DoiTuong_ChiNhanh();
 		
 		cn_nhap.setMst(mst_nhap.getText());
-		cn_nhap.setNguoidaidien(nguoidaidien_nhap.getText());
 		cn_nhap.setMachinhanh(machinhanh_nhap.getText());
 		
 		cn_sua.setMst(mst_sua.getText());
