@@ -14,7 +14,7 @@ BEGIN TRAN
 ROLLBACK TRAN
 GO
 
-------------VẤN TIN SẢN PHẨM----------------
+------------VẤN TIN ĐƠN ĐẶT HÀNG----------------
 --CREATE
 ALTER
 PROC USP_VANTINDDH
@@ -23,11 +23,13 @@ AS
 BEGIN TRAN
 --Default ISOLATION LEVEL READ COMMITTED: ask for S lock when reading
 
-    DECLARE @TRANGTHAI NVARCHAR(20) = ''
+    DECLARE @TRANGTHAI NVARCHAR(50) = ''
     BEGIN TRY
-        SELECT TINHTRANG
-        FROM DONDH
-        WHERE MADDH = @MADDH
+        SET @TRANGTHAI = (SELECT TINHTRANG
+                            FROM DONDH
+                            WHERE MADDH = @MADDH)
+        PRINT N'TRẠNG THÁI HIỆN TẠI CỦA ĐƠN HÀNG ' + @MADDH + ' : ' + @TRANGTHAI
+
     END TRY
     BEGIN CATCH
         DECLARE @ERRORMSG NVARCHAR(1000)
