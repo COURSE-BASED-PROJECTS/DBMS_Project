@@ -1,4 +1,4 @@
-package DangNhap;
+package TranhChap.Unrepeatable;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -33,13 +33,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Vector;
 
-public class DangNhap extends JFrame {
+public class DangNhap_Unrepeatable_3 extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField userName;
 	private JPasswordField password;
 	private JDesktopPane desktopPane;
-	private static DangNhap frame;
+	private static DangNhap_Unrepeatable_3 frame;
 	private DoiTac dt;
 	private KhachHang kh;
 	private NhanVien nv;
@@ -58,7 +58,7 @@ public class DangNhap extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					frame = new DangNhap();
+					frame = new DangNhap_Unrepeatable_3();
 					frame.setVisible(true);
 					frame.setResizable(false);
 					frame.setLocationRelativeTo(null);
@@ -72,7 +72,7 @@ public class DangNhap extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DangNhap() {
+	public DangNhap_Unrepeatable_3() {
 		setTitle("DANG NHAP");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -85,22 +85,16 @@ public class DangNhap extends JFrame {
 		contentPane.add(desktopPane, BorderLayout.CENTER);
 		
 		userName = new JTextField();
-		userName.setBounds(126, 45, 188, 35);
+		userName.setBounds(126, 45, 218, 35);
 		desktopPane.add(userName);
 		userName.setColumns(10);
 		
 		password = new JPasswordField();
-		password.setBounds(126, 105, 188, 35);
+		password.setBounds(126, 105, 218, 35);
 		desktopPane.add(password);
-		password.addKeyListener(new KeyAdapter() {
-			@Override
-			public void keyPressed(KeyEvent e) {
-				do_password_keyPressed(e);
-			}
-		});
 		
 		JButton loginButton = new JButton("Dang nhap");
-		loginButton.setBounds(174, 172, 86, 28);
+		loginButton.setBounds(126, 173, 86, 28);
 		desktopPane.add(loginButton);
 		loginButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -118,14 +112,32 @@ public class DangNhap extends JFrame {
 		lblNewLabel_1.setBounds(36, 109, 61, 26);
 		desktopPane.add(lblNewLabel_1);
 		
+		JButton btnDangNhapfix = new JButton("Dang nhap (fix)");
+		btnDangNhapfix.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_btnDangNhapfix_actionPerformed(e);
+			}
+		});
+		btnDangNhapfix.setBounds(228, 173, 116, 28);
+		desktopPane.add(btnDangNhapfix);
+		
 	}
 	protected void do_loginButton_actionPerformed(ActionEvent e) {
 		String usernameString = userName.getText();
 		String passString = String.valueOf(password.getPassword());
 		KetNoi kn = new KetNoi();
+		ResultSet rs = null;
+		int numberColumn = 0;
 		
-		ResultSet rs = kn.getResultSet("select * from NGUOIDUNG");
-		int numberColumn = kn.getNumberColumn();
+		
+		try {
+			rs = kn.getResultSet("EXEC USP_DANGNHAP '"+usernameString+"','"+passString+ "'");
+			numberColumn = kn.getNumberColumn();
+		} catch (Exception e2) {
+			JOptionPane.showConfirmDialog(this, "Sai tài khoản hoặc mật khẩu", "Lỗi đăng nhập", JOptionPane.CLOSED_OPTION);
+			return;
+		}
+		
 		Vector<String> row = null;
 		boolean found = false;
 		boolean lock = false;
@@ -149,9 +161,15 @@ public class DangNhap extends JFrame {
 		} finally {
 			kn.Disconnect();
 			try {
-				rs.close();
+				if(rs!=null)
+					rs.close();
+				else {
+					JOptionPane.showConfirmDialog(this, "Sai tài khoản hoặc mật khẩu", "Lỗi đăng nhập", JOptionPane.CLOSED_OPTION);
+				}
 			} catch (SQLException e2) {
+				JOptionPane.showConfirmDialog(this, "Sai tài khoản hoặc mật khẩu", "Lỗi đăng nhập", JOptionPane.CLOSED_OPTION);
 				e2.printStackTrace();
+				return;
 			}
 		}
 		
@@ -175,36 +193,36 @@ public class DangNhap extends JFrame {
 		
 		switch (type) {
 		case "DoiTac": {
-			dt = new DoiTac();
-			dt.setVisible(true);
+			DoiTac doitac = new DoiTac();
+			doitac.setVisible(true);
 			this.dispose();
 			
 			break;
 		}
 		case "KhachHang": {
-			kh = new KhachHang();
-			kh.setVisible(true);
+			KhachHang khachhang = new KhachHang();
+			khachhang.setVisible(true);
 			this.dispose();
 			
 			break;
 		}
 		case "NhanVien": {
-			nv = new NhanVien();
-			nv.setVisible(true);
+			NhanVien nhanvien = new NhanVien();
+			nhanvien.setVisible(true);
 			this.dispose();
 			
 			break;
 		}
 		case "TaiXe": {
-			tx = new TaiXe();
-			tx.setVisible(true);
+			TaiXe taixe = new TaiXe();
+			taixe.setVisible(true);
 			this.dispose();
 			
 			break;
 		}
 		case "QuanTri": {
-			qt = new QuanTri();
-			qt.setVisible(true);
+			QuanTri quantri = new QuanTri();
+			quantri.setVisible(true);
 			this.dispose();
 			
 			break;
@@ -215,47 +233,69 @@ public class DangNhap extends JFrame {
 		}
 	}
 	
-	protected void do_password_keyPressed(KeyEvent e) {
-		if(e.getKeyCode() == KeyEvent.VK_ENTER) {
-			String usernameString = userName.getText();
-			String passString = String.valueOf(password.getPassword());
-			KetNoi kn = new KetNoi();
-			
-			ResultSet rs = kn.getResultSet("select * from NGUOIDUNG");
-			int numberColumn = kn.getNumberColumn();
-			Vector<String> row = null;
-			boolean found = false;
-			
-			try {
-				while(rs.next()) {
-					row = new Vector<String>();
-					
-					for(int i=1;i<=numberColumn;i++)
-						row.addElement(rs.getString(i));
-					
-					if(row.get(0).equals(usernameString) && row.get(1).equals(passString)) {
-						found = true;
-						break;
-					}
-				}
+	
+	protected void do_btnDangNhapfix_actionPerformed(ActionEvent e) {
+		String usernameString = userName.getText();
+		String passString = String.valueOf(password.getPassword());
+		KetNoi kn = new KetNoi();
+		ResultSet rs = null;
+		int numberColumn = 0;
+		
+		
+		try {
+			rs = kn.getResultSet("EXEC USP_DANGNHAP_FIX '"+usernameString+"','"+passString+ "'");
+			numberColumn = kn.getNumberColumn();
+		} catch (Exception e2) {
+			JOptionPane.showConfirmDialog(this, "Sai tài khoản hoặc mật khẩu", "Lỗi đăng nhập", JOptionPane.CLOSED_OPTION);
+			return;
+		}
+		
+		Vector<String> row = null;
+		boolean found = false;
+		boolean lock = false;
+		
+		try {
+			while(rs.next()) {
+				row = new Vector<String>();
 				
-			} catch (SQLException e1) {
-				e1.printStackTrace();
-			} finally {
-				kn.Disconnect();
-				try {
-					rs.close();
-				} catch (SQLException e2) {
-					e2.printStackTrace();
+				for(int i=1;i<=numberColumn;i++)
+					row.addElement(rs.getString(i));
+				
+				if(row.get(0).equals(usernameString) && row.get(1).equals(passString)) {
+					found = true;
+					lock = row.get(3).equals("1");
+					break;
 				}
 			}
 			
-			if(!found) {
-				JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu sai",
-						"lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		} finally {
+			kn.Disconnect();
+			try {
+				if(rs!=null)
+					rs.close();
+				else {
+					JOptionPane.showConfirmDialog(this, "Sai tài khoản hoặc mật khẩu", "Lỗi đăng nhập", JOptionPane.CLOSED_OPTION);
+				}
+			} catch (SQLException e2) {
+				JOptionPane.showConfirmDialog(this, "Sai tài khoản hoặc mật khẩu", "Lỗi đăng nhập", JOptionPane.CLOSED_OPTION);
+				e2.printStackTrace();
 				return;
 			}
-			classification(row.get(2));
 		}
+		
+		if(!found) {
+			JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu sai",
+					"lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		else if(!lock) {
+			JOptionPane.showMessageDialog(this, "Tài khoản đã bị khóa",
+					"lỗi đăng nhập", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		classification(row.get(2));
 	}
 }

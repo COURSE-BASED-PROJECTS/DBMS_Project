@@ -21,7 +21,10 @@ import javax.swing.table.DefaultTableModel;
 
 import DoiTuong.DoiTuong_CungCap;
 import DoiTuong.DoiTuong_QuanTri;
+import DoiTuong.TaiKhoan_HienTai;
 import KetNoi.KetNoi;
+import TranhChap.Unrepeatable.CapNhat_TaiKhoan_Unrepeatable_3;
+import TranhChap.Unrepeatable.VanTin_SanPham_Unrepeatable_2;
 
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
@@ -44,12 +47,11 @@ public class QuanTri extends JFrame {
 	private JComboBox phanhe;
 	private JTextField taikhoan_nhap;
 	
-	private static String taikhoan="";
-	private static String matkhau="";
 	private final ButtonGroup kichhoat = new ButtonGroup();
 	private JRadioButton dakichhoat;
 	private JRadioButton chuakichhoat;
 	private JPasswordField matkhau_nhap;
+	private CapNhat_TaiKhoan_Unrepeatable_3 unrepeatable_3 =null;
 
 
 	/**
@@ -59,7 +61,7 @@ public class QuanTri extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					QuanTri frame = new QuanTri(taikhoan,matkhau);
+					QuanTri frame = new QuanTri();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,21 +73,19 @@ public class QuanTri extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public QuanTri(String taikhoan, String matkhau) {
-		this.taikhoan = taikhoan;
-		this.matkhau = matkhau;
+	public QuanTri() {
 		
 		setTitle("Quản Trị");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 815, 476);
+		setBounds(100, 100, 815, 572);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 271, 781, 144);
+		scrollPane.setBounds(10, 271, 781, 158);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -197,6 +197,22 @@ public class QuanTri extends JFrame {
 		btnXoa.setBounds(143, 41, 100, 36);
 		panel_1.add(btnXoa);
 		
+		JPanel panel_1_1 = new JPanel();
+		panel_1_1.setLayout(null);
+		panel_1_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Demo Tranh Ch\u1EA5p", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_1_1.setBounds(10, 433, 415, 102);
+		contentPane.add(panel_1_1);
+		
+		JButton btnUnrepeatable = new JButton("Unrepeatable 3");
+		btnUnrepeatable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_btnUnrepeatable_actionPerformed(e);
+			}
+		});
+		btnUnrepeatable.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnUnrepeatable.setBounds(21, 28, 141, 47);
+		panel_1_1.add(btnUnrepeatable);
+		
 		loadData();
 	}
 	
@@ -211,7 +227,7 @@ public class QuanTri extends JFrame {
 		DefaultTableModel defaultTableModel = new DefaultTableModel();
 		initialRow(defaultTableModel);
 		
-		KetNoi kn = new KetNoi(taikhoan, matkhau);
+		KetNoi kn = new KetNoi(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 		ResultSet rs = kn.getResultSet("select * from NGUOIDUNG");
 		int numberColumn = kn.getNumberColumn();
 		defaultTableModel.setRowCount(0);
@@ -277,7 +293,7 @@ public class QuanTri extends JFrame {
 		qt.setPhanhe(phanloai(phanhe.getSelectedItem().toString()));
 		qt.setTinhtrang(dakichhoat.isSelected() ? "1":"0");
 		
-		if(qt.themTaiKhoan(qt, taikhoan, matkhau)) {
+		if(qt.themTaiKhoan(qt, TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau())) {
 			JOptionPane.showConfirmDialog(this, "Thêm thành công","Thêm Tài Khoản",JOptionPane.OK_OPTION);
 			
 		}
@@ -292,7 +308,7 @@ public class QuanTri extends JFrame {
 		
 		qt.setTaikhoan(taikhoan_nhap.getText());
 		
-		if(qt.xoaTaiKhoan(qt, taikhoan, matkhau)) {
+		if(qt.xoaTaiKhoan(qt, TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau())) {
 			JOptionPane.showConfirmDialog(this, "Xóa thành công","Xóa Tài Khoản",JOptionPane.OK_OPTION);
 			
 		}
@@ -308,12 +324,22 @@ public class QuanTri extends JFrame {
 		qt.setPhanhe(phanloai(phanhe.getSelectedItem().toString()));
 		qt.setTinhtrang(dakichhoat.isSelected() ? "1":"0");
 		
-		if(qt.suaTaiKhoan(qt, taikhoan, matkhau)) {
+		if(qt.suaTaiKhoan(qt, TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau())) {
 			JOptionPane.showConfirmDialog(this, "Cập nhật thành công","Cập nhật Tài Khoản",JOptionPane.OK_OPTION);
 			
 		}
 		else {
 			JOptionPane.showConfirmDialog(this, "Cập nhật không thành công","Cập nhật Tài Khoản",JOptionPane.CANCEL_OPTION);
+		}
+	}
+	protected void do_btnUnrepeatable_actionPerformed(ActionEvent e) {
+		if(unrepeatable_3 == null) {
+			unrepeatable_3 = new CapNhat_TaiKhoan_Unrepeatable_3();
+			unrepeatable_3.setVisible(true);
+			unrepeatable_3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+		else {
+			unrepeatable_3.setVisible(true);
 		}
 	}
 }

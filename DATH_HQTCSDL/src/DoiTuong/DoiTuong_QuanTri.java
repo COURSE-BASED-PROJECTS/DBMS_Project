@@ -42,7 +42,7 @@ public class DoiTuong_QuanTri {
 		KetNoi kn = new KetNoi();
 		String sql_1 = "EXEC sp_addLogin '"+tk.getTaikhoan()+"','"+tk.getMatkhau()+"','QLCH'";
 		String sql_2 = "CREATE USER "+tk.getTaikhoan()+" FOR LOGIN "+tk.getTaikhoan();
-		String sql_3 = "ALTER ROLE "+tk.getPhanhe() + " ADD member "+tk.getTaikhoan();
+		String sql_3 = "ALTER ROLE "+tk.getPhanhe()+"_ROLE" + " ADD member "+tk.getTaikhoan();
 		Connection cnn = kn.getConnection();
 		
 		try {
@@ -91,7 +91,7 @@ public class DoiTuong_QuanTri {
 		KetNoi kn = new KetNoi();
 		String sql_1 = "DROP USER "+tk.getTaikhoan();
 		String sql_2 = "CREATE USER "+tk.getTaikhoan()+" FOR LOGIN "+tk.getTaikhoan();
-		String sql_3 = "ALTER ROLE "+tk.getPhanhe() + " ADD member "+tk.getTaikhoan();
+		String sql_3 = "ALTER ROLE "+tk.getPhanhe()+"_ROLE" + " ADD member "+tk.getTaikhoan();
 		String sql_4 = "ALTER LOGIN "+tk.getTaikhoan() + 
 				" WITH PASSWORD = '"+tk.getMatkhau()+"'";
 		System.out.print(tk.getMatkhau()+ tk.getTaikhoan());

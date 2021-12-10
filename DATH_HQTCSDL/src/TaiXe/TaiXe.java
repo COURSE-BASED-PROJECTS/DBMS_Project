@@ -9,7 +9,11 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
 import CRUD.CapNhat_DDH;
+import DoiTuong.TaiKhoan_HienTai;
 import KetNoi.KetNoi;
+import TranhChap.DirtyRead.CapNhat_TinhTrang_DirtyRead_2;
+import TranhChap.DirtyRead.VanTin_DDH_DirtyRead_3;
+import TranhChap.Unrepeatable.DangNhap_Unrepeatable_3;
 
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -24,14 +28,16 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import javax.swing.border.TitledBorder;
 
 public class TaiXe extends JFrame {
 
 	private JPanel contentPane;
 	private JTable table;
 	private CapNhat_DDH capnhatDDH =null;
-	private static String taikhoan="";
-	private static String matkhau="";
+	private CapNhat_TinhTrang_DirtyRead_2 dirtyRead_2=null;
+	private VanTin_DDH_DirtyRead_3 dirtyRead_3=null;
+	private DangNhap_Unrepeatable_3 unrepeatable_3=null;
 	/**
 	 * Launch the application.
 	 */
@@ -39,7 +45,7 @@ public class TaiXe extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					TaiXe frame = new TaiXe(taikhoan,matkhau);
+					TaiXe frame = new TaiXe();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -51,14 +57,12 @@ public class TaiXe extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public TaiXe(String taikhoan, String matkhau) {
-		this.taikhoan = taikhoan;
-		this.matkhau = matkhau;
+	public TaiXe() {
 		
 		setTitle("Tai Xe");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 773, 431);
+		setBounds(100, 100, 773, 533);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -71,7 +75,7 @@ public class TaiXe extends JFrame {
 		contentPane.add(lblTaiX);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 144, 739, 240);
+		scrollPane.setBounds(10, 144, 739, 249);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
@@ -84,7 +88,7 @@ public class TaiXe extends JFrame {
 			}
 		});
 		btnCpNhtTinh.setFont(new Font("Tahoma", Font.PLAIN, 15));
-		btnCpNhtTinh.setBounds(10, 74, 231, 49);
+		btnCpNhtTinh.setBounds(10, 74, 245, 49);
 		contentPane.add(btnCpNhtTinh);
 		
 		JButton btnTaiLai = new JButton("Tải lại");
@@ -97,6 +101,42 @@ public class TaiXe extends JFrame {
 		btnTaiLai.setFont(new Font("Tahoma", Font.PLAIN, 15));
 		btnTaiLai.setBounds(654, 74, 95, 49);
 		contentPane.add(btnTaiLai);
+		
+		JPanel panel_1_1 = new JPanel();
+		panel_1_1.setLayout(null);
+		panel_1_1.setBorder(new TitledBorder(null, "T\u00EDnh n\u0103ng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1_1.setBounds(10, 394, 739, 102);
+		contentPane.add(panel_1_1);
+		
+		JButton btnDirtyRead = new JButton("Dirty read 2");
+		btnDirtyRead.setBounds(10, 34, 141, 47);
+		panel_1_1.add(btnDirtyRead);
+		btnDirtyRead.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_btnDirtyRead_actionPerformed(e);
+			}
+		});
+		btnDirtyRead.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		JButton btnDirtyRead_2 = new JButton("Dirty read 3");
+		btnDirtyRead_2.setBounds(179, 34, 141, 47);
+		panel_1_1.add(btnDirtyRead_2);
+		btnDirtyRead_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_btnDirtyRead_2_actionPerformed(e);
+			}
+		});
+		btnDirtyRead_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		
+		JButton btnDirtyRead_2_1 = new JButton("Unrepeatable 3");
+		btnDirtyRead_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_btnDirtyRead_2_1_actionPerformed(e);
+			}
+		});
+		btnDirtyRead_2_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnDirtyRead_2_1.setBounds(353, 34, 141, 47);
+		panel_1_1.add(btnDirtyRead_2_1);
 		
 		loadData();
 	}
@@ -117,7 +157,7 @@ public class TaiXe extends JFrame {
 		DefaultTableModel defaultTableModel = new DefaultTableModel();
 		initialRow(defaultTableModel);
 		
-		KetNoi kn = new KetNoi(taikhoan, matkhau);
+		KetNoi kn = new KetNoi(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 		ResultSet rs = kn.getResultSet("select * from DONDH");
 		int numberColumn = kn.getNumberColumn();
 		defaultTableModel.setRowCount(0);
@@ -142,7 +182,7 @@ public class TaiXe extends JFrame {
 
 	protected void do_btnCpNhtTinh_actionPerformed(ActionEvent e) {
 		if(capnhatDDH ==null) {
-			capnhatDDH = new CapNhat_DDH(taikhoan,matkhau);
+			capnhatDDH = new CapNhat_DDH(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 			capnhatDDH.setVisible(true);
 			capnhatDDH.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -152,5 +192,35 @@ public class TaiXe extends JFrame {
 	}
 	protected void do_btnTaiLai_actionPerformed(ActionEvent e) {
 		loadData();
+	}
+	protected void do_btnDirtyRead_actionPerformed(ActionEvent e) {
+		if(dirtyRead_2 ==null) {
+			dirtyRead_2 = new CapNhat_TinhTrang_DirtyRead_2();
+			dirtyRead_2.setVisible(true);
+			dirtyRead_2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+		else {
+			dirtyRead_2.setVisible(true);
+		}
+	}
+	protected void do_btnDirtyRead_2_actionPerformed(ActionEvent e) {
+		if(dirtyRead_3 ==null) {
+			dirtyRead_3 = new VanTin_DDH_DirtyRead_3();
+			dirtyRead_3.setVisible(true);
+			dirtyRead_3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+		else {
+			dirtyRead_3.setVisible(true);
+		}
+	}
+	protected void do_btnDirtyRead_2_1_actionPerformed(ActionEvent e) {
+		if(unrepeatable_3 ==null) {
+			unrepeatable_3 = new DangNhap_Unrepeatable_3();
+			unrepeatable_3.setVisible(true);
+			unrepeatable_3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+		else {
+			unrepeatable_3.setVisible(true);
+		}
 	}
 }

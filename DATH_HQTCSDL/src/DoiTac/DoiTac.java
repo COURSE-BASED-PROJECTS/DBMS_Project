@@ -17,7 +17,14 @@ import CRUD.Them_SanPham;
 import CRUD.Xoa_ChiNhanh;
 import CRUD.Xoa_CungCap;
 import CRUD.Xoa_SanPham;
+import DoiTuong.TaiKhoan_HienTai;
 import KetNoi.KetNoi;
+import TranhChap.LostUpdate.CapNhat_TangGia_LostUpdate_3;
+import TranhChap.PhantomRead.Them_ChiNhanh_PhantomRead_3;
+import TranhChap.PhantomRead.Them_DoiTac_PhantomRead_2;
+import TranhChap.PhantomRead.VanTin_DoiTac_PhantomRead_2;
+import TranhChap.Unrepeatable.CapNhat_TenSanPham_Unrepeatable_2;
+import TranhChap.Unrepeatable.VanTin_HetHan_Unrepeatable_1;
 
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
@@ -29,6 +36,9 @@ import java.util.Vector;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import javax.swing.border.TitledBorder;
+import java.awt.Font;
+import javax.swing.border.EtchedBorder;
 
 public class DoiTac extends JFrame {
 	
@@ -41,7 +51,7 @@ public class DoiTac extends JFrame {
 	private JTable table_hd;
 	
 	private String nameColumn_ChiNhanh[]= {"MST","NGUOIDAIDIEN","MACHINHANH","DIACHI"};
-	private String nameColumn_CungCap[]= {"MST","NGUOIDAIDIEN","MACHINHANH","MASP","GIASP"};
+	private String nameColumn_CungCap[]= {"MST","MACHINHANH","MASP","GIASP"};
 	private String nameColumn_SanPham[]= {"MASP","TENSP"};
 	private String nameColumn_DonDH[]= {"MADDH","MAKH","MATAIXE","DIACHIGIAOHANG","HINHTHUCTT","PHIVANCHUYEN","PHISP"
 		,"TINHTRANG","TONGTIEN"};
@@ -61,10 +71,11 @@ public class DoiTac extends JFrame {
 	private CapNhat_ChiNhanh capnhatChiNhanh=null;
 	private CapNhat_CungCap capnhatCungCap=null;
 	private CapNhat_SanPham capnhatSanPham=null;
-	
-	private static String taikhoan="";
-	private static String matkhau="";
-	
+	private VanTin_HetHan_Unrepeatable_1 unrepeatable_1=null;
+	private CapNhat_TenSanPham_Unrepeatable_2 unrepeatable_2=null;
+	private Them_DoiTac_PhantomRead_2 phantomRead_2=null;
+	private Them_ChiNhanh_PhantomRead_3 phantomRead_3=null;
+	private CapNhat_TangGia_LostUpdate_3 lostUpdate_3=null;
 
 	/**
 	 * Launch the application.
@@ -73,7 +84,7 @@ public class DoiTac extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					DoiTac frame = new DoiTac(taikhoan,matkhau);
+					DoiTac frame = new DoiTac();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -85,14 +96,12 @@ public class DoiTac extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public DoiTac(String taikhoan, String matkhau) {
-		this.taikhoan = taikhoan;
-		this.matkhau = matkhau;
+	public DoiTac() {
 		
 		setTitle("Đối Tác");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setResizable(false);
-		setBounds(100, 100, 828, 460);
+		setBounds(100, 100, 828, 457);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -108,7 +117,7 @@ public class DoiTac extends JFrame {
 		panel.setLayout(null);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 90, 769, 276);
+		scrollPane.setBounds(10, 90, 769, 172);
 		panel.add(scrollPane);
 		
 		table_chinhanh = new JTable();
@@ -185,7 +194,7 @@ public class DoiTac extends JFrame {
 		panel_2.setLayout(null);
 		
 		JScrollPane scrollPane_2 = new JScrollPane();
-		scrollPane_2.setBounds(10, 90, 769, 276);
+		scrollPane_2.setBounds(10, 90, 769, 171);
 		panel_2.add(scrollPane_2);
 		
 		table_sanpham = new JTable();
@@ -245,7 +254,7 @@ public class DoiTac extends JFrame {
 		panel_5.setLayout(null);
 		
 		JScrollPane scrollPane_5 = new JScrollPane();
-		scrollPane_5.setBounds(10, 10, 769, 356);
+		scrollPane_5.setBounds(10, 10, 769, 244);
 		panel_5.add(scrollPane_5);
 		
 		table_hd = new JTable();
@@ -262,6 +271,22 @@ public class DoiTac extends JFrame {
 		btnTaiLai.setBackground(Color.GREEN);
 		btnTaiLai.setBounds(664, 33, 115, 35);
 		panel.add(btnTaiLai);
+		
+		JPanel panel_1_1_1_1 = new JPanel();
+		panel_1_1_1_1.setLayout(null);
+		panel_1_1_1_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Demo Tranh Ch\u1EA5p", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		panel_1_1_1_1.setBounds(10, 264, 415, 102);
+		panel.add(panel_1_1_1_1);
+		
+		JButton btnUnrepeatable_2_1 = new JButton("Phantom Read 3");
+		btnUnrepeatable_2_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_btnUnrepeatable_2_1_actionPerformed(e);
+			}
+		});
+		btnUnrepeatable_2_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnUnrepeatable_2_1.setBounds(21, 28, 141, 47);
+		panel_1_1_1_1.add(btnUnrepeatable_2_1);
 		loadData("CUNGCAP", nameColumn_CungCap, table_cungcap);
 		
 		JButton btnTaiLai_1 = new JButton("Tải lại");
@@ -284,6 +309,32 @@ public class DoiTac extends JFrame {
 		btnTaiLai_2.setBackground(Color.GREEN);
 		btnTaiLai_2.setBounds(664, 33, 115, 35);
 		panel_2.add(btnTaiLai_2);
+		
+		JPanel panel_1_1_1 = new JPanel();
+		panel_1_1_1.setBounds(10, 264, 415, 102);
+		panel_2.add(panel_1_1_1);
+		panel_1_1_1.setLayout(null);
+		panel_1_1_1.setBorder(new TitledBorder(new EtchedBorder(EtchedBorder.LOWERED, new Color(255, 255, 255), new Color(160, 160, 160)), "Demo Tranh Ch\u1EA5p", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
+		
+		JButton btnUnrepeatable_2 = new JButton("Unrepeatable 2");
+		btnUnrepeatable_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_btnUnrepeatable_2_actionPerformed(e);
+			}
+		});
+		btnUnrepeatable_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnUnrepeatable_2.setBounds(21, 28, 141, 47);
+		panel_1_1_1.add(btnUnrepeatable_2);
+		
+		JButton btnUnrepeatable_2_2 = new JButton("Lost Update 3");
+		btnUnrepeatable_2_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_btnUnrepeatable_2_2_actionPerformed(e);
+			}
+		});
+		btnUnrepeatable_2_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnUnrepeatable_2_2.setBounds(193, 28, 141, 47);
+		panel_1_1_1.add(btnUnrepeatable_2_2);
 		loadData("DONDH", nameColumn_DonDH, table_ddh);
 		
 		JButton btnCpNhth = new JButton("Cập nhật ĐĐH");
@@ -306,6 +357,32 @@ public class DoiTac extends JFrame {
 		panel_3.add(btnTaiLai_3);
 		loadData("CHITIETDDH", nameColumn_ChiTietDDH, table_ctddh);
 		loadData("HOPDONG", nameColumn_HopDong, table_hd);
+		
+		JPanel panel_1_1 = new JPanel();
+		panel_1_1.setLayout(null);
+		panel_1_1.setBorder(new TitledBorder(null, "T\u00EDnh n\u0103ng", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+		panel_1_1.setBounds(10, 264, 415, 102);
+		panel_5.add(panel_1_1);
+		
+		JButton btnUnrepeatable = new JButton("Unrepeatable 1");
+		btnUnrepeatable.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_btnUnrepeatable_actionPerformed(e);
+			}
+		});
+		btnUnrepeatable.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnUnrepeatable.setBounds(21, 28, 141, 47);
+		panel_1_1.add(btnUnrepeatable);
+		
+		JButton btnPhantomRead = new JButton("Phantom Read 2");
+		btnPhantomRead.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				do_btnPhantomRead_actionPerformed(e);
+			}
+		});
+		btnPhantomRead.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnPhantomRead.setBounds(193, 28, 141, 47);
+		panel_1_1.add(btnPhantomRead);
 	}
 	
 	private void initialRow(DefaultTableModel defaultTableModel, String nameColumn[]) {
@@ -319,7 +396,7 @@ public class DoiTac extends JFrame {
 		initialRow(defaultTableModel,nameColumn);
 		
 		String query = "select * from " + nameTable;
-		KetNoi kn = new KetNoi(taikhoan, matkhau);
+		KetNoi kn = new KetNoi(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 		ResultSet rs = kn.getResultSet(query);
 		int numberColumn = kn.getNumberColumn();
 		defaultTableModel.setRowCount(0);
@@ -344,7 +421,7 @@ public class DoiTac extends JFrame {
 
 	protected void do_btnNewButton_actionPerformed(ActionEvent e) {
 		if(themChiNhanh == null) {
-			themChiNhanh = new Them_ChiNhanh(this.taikhoan,this.matkhau);
+			themChiNhanh = new Them_ChiNhanh(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 			themChiNhanh.setVisible(true);
 			themChiNhanh.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -354,7 +431,7 @@ public class DoiTac extends JFrame {
 	}
 	protected void do_btnNewButton_1_actionPerformed(ActionEvent e) {
 		if(themCungCap ==null) {
-			themCungCap = new Them_CungCap(taikhoan,matkhau);
+			themCungCap = new Them_CungCap(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 			themCungCap.setVisible(true);
 			themCungCap.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -364,7 +441,7 @@ public class DoiTac extends JFrame {
 	}
 	protected void do_btnNewButton_1_1_actionPerformed(ActionEvent e) {
 		if(themSanPham ==null) {
-			themSanPham = new Them_SanPham(taikhoan,matkhau);
+			themSanPham = new Them_SanPham(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 			themSanPham.setVisible(true);
 			themSanPham.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -374,7 +451,7 @@ public class DoiTac extends JFrame {
 	}
 	protected void do_btnCpNhth_actionPerformed(ActionEvent e) {
 		if(capNhatDDH ==null) {
-			capNhatDDH = new CapNhat_DDH(taikhoan,matkhau);
+			capNhatDDH = new CapNhat_DDH(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 			capNhatDDH.setVisible(true);
 			capNhatDDH.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -387,7 +464,7 @@ public class DoiTac extends JFrame {
 	}
 	protected void do_btnXoa_actionPerformed(ActionEvent e) {
 		if(xoaChiNhanh ==null) {
-			xoaChiNhanh = new Xoa_ChiNhanh(taikhoan,matkhau);
+			xoaChiNhanh = new Xoa_ChiNhanh(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 			xoaChiNhanh.setVisible(true);
 			xoaChiNhanh.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -397,7 +474,7 @@ public class DoiTac extends JFrame {
 	}
 	protected void do_btnSa_actionPerformed(ActionEvent e) {
 		if(capnhatChiNhanh ==null) {
-			capnhatChiNhanh = new CapNhat_ChiNhanh(taikhoan,matkhau);
+			capnhatChiNhanh = new CapNhat_ChiNhanh(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 			capnhatChiNhanh.setVisible(true);
 			capnhatChiNhanh.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -407,7 +484,7 @@ public class DoiTac extends JFrame {
 	}
 	protected void do_btnNewButton_2_actionPerformed(ActionEvent e) {
 		if(xoaCungCap ==null) {
-			xoaCungCap = new Xoa_CungCap(taikhoan,matkhau);
+			xoaCungCap = new Xoa_CungCap(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 			xoaCungCap.setVisible(true);
 			xoaCungCap.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -418,7 +495,7 @@ public class DoiTac extends JFrame {
 	
 	protected void do_btnNewButton_3_actionPerformed(ActionEvent e) {
 		if(capnhatCungCap ==null) {
-			capnhatCungCap = new CapNhat_CungCap(taikhoan,matkhau);
+			capnhatCungCap = new CapNhat_CungCap(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 			capnhatCungCap.setVisible(true);
 			capnhatCungCap.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -428,7 +505,7 @@ public class DoiTac extends JFrame {
 	}
 	protected void do_btnNewButton_2_1_actionPerformed(ActionEvent e) {
 		if(xoaSanPham ==null) {
-			xoaSanPham = new Xoa_SanPham(taikhoan,matkhau);
+			xoaSanPham = new Xoa_SanPham(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 			xoaSanPham.setVisible(true);
 			xoaSanPham.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -439,7 +516,7 @@ public class DoiTac extends JFrame {
 	
 	protected void do_btnNewButton_3_1_actionPerformed(ActionEvent e) {
 		if(capnhatSanPham ==null) {
-			capnhatSanPham = new CapNhat_SanPham(taikhoan,matkhau);
+			capnhatSanPham = new CapNhat_SanPham(TaiKhoan_HienTai.getTaikhoan(), TaiKhoan_HienTai.getMatkhau());
 			capnhatSanPham.setVisible(true);
 			capnhatSanPham.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		}
@@ -455,5 +532,55 @@ public class DoiTac extends JFrame {
 	}
 	protected void do_btnTaiLai_3_actionPerformed(ActionEvent e) {
 		loadData("DONDH", nameColumn_DonDH, table_ddh);
+	}
+	protected void do_btnUnrepeatable_actionPerformed(ActionEvent e) {
+		if(unrepeatable_1 ==null) {
+			unrepeatable_1 = new VanTin_HetHan_Unrepeatable_1();
+			unrepeatable_1.setVisible(true);
+			unrepeatable_1.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+		else {
+			unrepeatable_1.setVisible(true);
+		}
+	}
+	protected void do_btnUnrepeatable_2_actionPerformed(ActionEvent e) {
+		if(unrepeatable_2 ==null) {
+			unrepeatable_2 = new CapNhat_TenSanPham_Unrepeatable_2();
+			unrepeatable_2.setVisible(true);
+			unrepeatable_2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+		else {
+			unrepeatable_2.setVisible(true);
+		}
+	}
+	protected void do_btnPhantomRead_actionPerformed(ActionEvent e) {
+		if(phantomRead_2 ==null) {
+			phantomRead_2 = new Them_DoiTac_PhantomRead_2();
+			phantomRead_2.setVisible(true);
+			phantomRead_2.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+		else {
+			phantomRead_2.setVisible(true);
+		}
+	}
+	protected void do_btnUnrepeatable_2_1_actionPerformed(ActionEvent e) {
+		if(phantomRead_3 ==null) {
+			phantomRead_3 = new Them_ChiNhanh_PhantomRead_3();
+			phantomRead_3.setVisible(true);
+			phantomRead_3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+		else {
+			phantomRead_3.setVisible(true);
+		}
+	}
+	protected void do_btnUnrepeatable_2_2_actionPerformed(ActionEvent e) {
+		if(lostUpdate_3 ==null) {
+			lostUpdate_3 = new CapNhat_TangGia_LostUpdate_3();
+			lostUpdate_3.setVisible(true);
+			lostUpdate_3.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		}
+		else {
+			lostUpdate_3.setVisible(true);
+		}
 	}
 }
