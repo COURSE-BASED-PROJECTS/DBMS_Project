@@ -133,7 +133,6 @@ public class Them_CungCap extends JFrame {
 	protected void do_btnNewButton_actionPerformed(ActionEvent e) {
 		DoiTuong_CungCap cc = new DoiTuong_CungCap();
 		cc.setMst(mst.getText());
-		cc.setNguoidaidien(nguoidaidien.getText());
 		cc.setMachinhanh(machinhanh.getText());
 		cc.setMasp(masp.getText());
 		cc.setGiasp(giasp.getText());

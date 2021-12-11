@@ -183,7 +183,6 @@ public class CapNhat_CungCap extends JFrame {
 		cc_nhap.setMasp(masp_nhap.getText());
 		
 		cc_sua.setMst(mst_sua.getText());
-		cc_sua.setNguoidaidien(nguoidaidien_sua.getText());
 		cc_sua.setMachinhanh(machinhanh_sua.getText());
 		cc_sua.setMasp(masp_sua.getText());
 		cc_sua.setGiasp(giasp_sua.getText());
