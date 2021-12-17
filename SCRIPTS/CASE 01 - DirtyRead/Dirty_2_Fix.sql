@@ -15,9 +15,9 @@ ROLLBACK TRAN
 GO
 
 ------------VẤN TIN ĐƠN ĐẶT HÀNG----------------
---CREATE
-ALTER
-PROC USP_VANTINDDH
+CREATE
+--ALTER
+PROC USP_VANTINDDH_FIX
     @MADDH CHAR(20)
 AS
 BEGIN TRAN
@@ -25,11 +25,12 @@ BEGIN TRAN
 
     DECLARE @TRANGTHAI NVARCHAR(50) = ''
     BEGIN TRY
-        SET @TRANGTHAI = (SELECT TINHTRANG
-                            FROM DONDH
-                            WHERE MADDH = @MADDH)
-        PRINT N'TRẠNG THÁI HIỆN TẠI CỦA ĐƠN HÀNG ' + @MADDH + ' : ' + @TRANGTHAI
-
+       -- SET @TRANGTHAI = (SELECT TINHTRANG
+         --                   FROM DONDH
+           --                 WHERE MADDH = @MADDH)
+      --  PRINT N'TRẠNG THÁI HIỆN TẠI CỦA ĐƠN HÀNG ' + @MADDH + ' : ' + @TRANGTHAI
+	   SELECT * FROM DONDH WHERE MADDH = @MADDH
+		
     END TRY
     BEGIN CATCH
         DECLARE @ERRORMSG NVARCHAR(1000)

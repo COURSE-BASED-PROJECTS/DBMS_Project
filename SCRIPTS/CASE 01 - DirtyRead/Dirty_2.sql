@@ -24,10 +24,11 @@ BEGIN TRAN
     SET TRAN ISOLATION LEVEL READ UNCOMMITTED --READ WITH NO S LOCK
     DECLARE @TRANGTHAI NVARCHAR(50) = ''
     BEGIN TRY
-        SET @TRANGTHAI = (SELECT TINHTRANG
-                            FROM DONDH
-                            WHERE MADDH = @MADDH)
-        PRINT N'TRẠNG THÁI HIỆN TẠI CỦA ĐƠN HÀNG ' + @MADDH + ' : ' + @TRANGTHAI
+    --    SET @TRANGTHAI = (SELECT TINHTRANG
+      --                      FROM DONDH
+        --                    WHERE MADDH = @MADDH)
+       -- PRINT N'TRẠNG THÁI HIỆN TẠI CỦA ĐƠN HÀNG ' + @MADDH + ' : ' + @TRANGTHAI
+	   SELECT * FROM DONDH WHERE MADDH = @MADDH
 
     END TRY
     BEGIN CATCH

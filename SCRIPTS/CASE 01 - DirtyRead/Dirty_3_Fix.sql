@@ -16,9 +16,9 @@ GO
 
 -- [TÀI XẾ] truy vấn địa chỉ giao hàng
 ------------VẤN TIN ĐỊA CHỈ GIAO HÀNG---------------
---CREATE
-ALTER
-PROC USP_VANTINDCGH
+CREATE
+--ALTER
+PROC USP_VANTINDCGH_FIX
     @MADDH CHAR(20)
 AS
 BEGIN TRAN

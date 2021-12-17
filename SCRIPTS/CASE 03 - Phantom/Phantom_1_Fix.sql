@@ -1,7 +1,7 @@
 --Lấy danh sách sản phẩm
---CREATE 
-ALTER
-PROC USP_LayDSSP
+CREATE 
+--ALTER
+PROC USP_LayDSSP_FIX
 AS
 BEGIN TRAN
     SET TRAN ISOLATION LEVEL SERIALIZABLE -- Prevent inserting new rows into the key range
@@ -12,11 +12,13 @@ BEGIN TRAN
 		OPEN CUR
 		SET @SLSP = (SELECT COUNT(*) FROM SANPHAM)
 		
-        SELECT @@SPID
+      /*  SELECT @@SPID
         SELECT * FROM sys.dm_tran_locks
         WHERE request_session_id = @@SPID
-
+		*/
+		SELECT * FROM SANPHAM
         WAITFOR DELAY '0:0:05'
+		
 
 	    PRINT N'TỔNG SẢN PHẨM: ' + CAST(@SLSP AS VARCHAR(10))
 		FETCH NEXT FROM CUR INTO @MASP, @TENSP
@@ -28,6 +30,7 @@ BEGIN TRAN
 		END
 		CLOSE CUR
 		DEALLOCATE CUR
+
 	END TRY
 	BEGIN CATCH
 		DECLARE @ErrorMsg VARCHAR(2000)

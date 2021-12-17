@@ -20,109 +20,109 @@ GO
 
 --Bước 2: Tạo các user tương ứng
 --Đối tác
-CREATE USER DOITACA FOR LOGIN DoiTac
+CREATE USER DoiTac FOR LOGIN DoiTac
 GO
 --Khách hàng
-CREATE USER KHACHHANGA FOR LOGIN KhachHang
+CREATE USER KhachHang FOR LOGIN KhachHang
 GO
 --Tài xế
-CREATE USER TAIXEA FOR LOGIN TaiXe
+CREATE USER TaiXe FOR LOGIN TaiXe
 GO
 --Nhân viên
-CREATE USER NHANVIENA FOR LOGIN NhanVien
+CREATE USER NhanVien FOR LOGIN NhanVien
 GO
 --Quản trị
-CREATE USER QUANTRIA FOR LOGIN QuanTri
+CREATE USER QuanTri FOR LOGIN QuanTri
 GO
 
 --Bước 3: tạo role
 --Đối tác
-EXEC sp_addrole 'DoiTac'
+EXEC sp_addrole 'DOITAC_ROLE'
 GO
 --Khách hàng
-EXEC sp_addrole 'KhachHang'
+EXEC sp_addrole 'KHACHHANG_ROLE'
 GO
 --Tài xế
-EXEC sp_addrole 'TaiXe'
+EXEC sp_addrole 'TAIXE_ROLE'
 GO
 --Nhân viên
-EXEC sp_addrole 'NhanVien'
+EXEC sp_addrole 'NHANVIEN_ROLE'
 GO
 --Quản trị
-EXEC sp_addrole 'QuanTri'
+EXEC sp_addrole 'QUANTRI_ROLE'
 GO
 
 --Bước 4: Gán người dùng vào role. Lúc này role chưa có gán quyền
 --Đối tác
-ALTER ROLE DoiTac
-ADD member DOITACA
+ALTER ROLE DOITAC_ROLE
+ADD member DoiTac
 GO
 --Khách hàng
-ALTER ROLE KhachHang
-ADD member KHACHHANGA
+ALTER ROLE KHACHHANG_ROLE
+ADD member KhachHang
 GO
 --Tài xế
-ALTER ROLE TaiXe
-ADD member TAIXEA
+ALTER ROLE TAIXE_ROLE
+ADD member TaiXe
 GO
 --Nhân viên
-ALTER ROLE NhanVien
-ADD member NHANVIENA
+ALTER ROLE NHANVIEN_ROLE
+ADD member NhanVien
 GO
 --Quản trị
-ALTER ROLE QuanTri ADD member QUANTRIA
+ALTER ROLE QUANTRI_ROLE ADD member QuanTri
 GO
-ALTER ROLE db_accessadmin ADD member QUANTRIA
+ALTER ROLE db_accessadmin ADD member QuanTri
 GO
 
 
 --Bước 5: Cấp quyền cho Role 
 --Đối tác
 --Thêm/Xóa/Sửa thông tin sản phẩm và chi nhánh có cung cấp sản phẩm này.
-GRANT SELECT,INSERT,UPDATE,DELETE ON SANPHAM TO DoiTac 
-GRANT SELECT,INSERT,UPDATE,DELETE ON CUNGCAP TO DoiTac
-GRANT SELECT,INSERT,UPDATE,DELETE ON CHINHANH TO DoiTac 
+GRANT SELECT,INSERT,UPDATE,DELETE ON SANPHAM TO DOITAC_ROLE 
+GRANT SELECT,INSERT,UPDATE,DELETE ON CUNGCAP TO DOITAC_ROLE
+GRANT SELECT,INSERT,UPDATE,DELETE ON CHINHANH TO DOITAC_ROLE 
 --Xem thông tin hợp đồng
-GRANT SELECT ON HOPDONG TO DoiTac
+GRANT SELECT ON HOPDONG TO DOITAC_ROLE
 --Xem thông tin đơn hàng
-GRANT SELECT ON DONDH TO DoiTac 
-GRANT SELECT ON CHITIETDDH TO DoiTac
+GRANT SELECT ON DONDH TO DOITAC_ROLE 
+GRANT SELECT ON CHITIETDDH TO DOITAC_ROLE
 --Cập nhật tình trạng của đơn hàng
-GRANT UPDATE ON DONDH(TINHTRANG) TO DoiTac 
+GRANT UPDATE ON DONDH(TINHTRANG) TO DOITAC_ROLE 
 
 GO
 
 --Khách hàng
 --Xem danh sách đối tác
-GRANT SELECT ON DOITAC TO KhachHang
+GRANT SELECT ON DOITAC TO KHACHHANG_ROLE
 --Hiển thị danh sách sản phẩm của đối tác
-GRANT SELECT ON CUNGCAP TO KhachHang 
-GRANT SELECT ON SANPHAM TO KhachHang
+GRANT SELECT ON CUNGCAP TO KHACHHANG_ROLE 
+GRANT SELECT ON SANPHAM TO KHACHHANG_ROLE
 --Cập nhật thông tin đơn đặt hàng và 
 --theo dõi quá trình vận chuyển đơn hàng
-GRANT SELECT ON  CHITIETDDH TO KhachHang 
-GRANT SELECT ON DONDH TO KhachHang 
+GRANT SELECT ON  CHITIETDDH TO KHACHHANG_ROLE 
+GRANT SELECT ON DONDH TO KHACHHANG_ROLE 
 
 GO
 
 --Tài xế
 --Xem thông tin đơn đặt hàng
-GRANT SELECT ON DONDH TO TaiXe
+GRANT SELECT ON DONDH TO TAIXE_ROLE
 --Cập nhật tình trạng đơn hàng 
-GRANT UPDATE ON DONDH(TINHTRANG) TO TaiXe
+GRANT UPDATE ON DONDH(TINHTRANG) TO TAIXE_ROLE
 
 GO
 
 --Nhân viên
 --Xem thông tin hợp đồng của đối tác
-GRANT SELECT ON HOPDONG TO NhanVien 
+GRANT SELECT ON HOPDONG TO NHANVIEN_ROLE 
 --Cập nhật thời gian gia hạn hợp đồng và phí hoa hồng
 GRANT UPDATE ON HOPDONG(THGIANHIEULUC, PHIHOAHONG, KICHHOAT) 
-             TO NhanVien 
+             TO NHANVIEN_ROLE 
 
 GO
 
 --Quản trị
 --Thêm/Xóa/Sửa tài khoản các người dùng
 GRANT SELECT,INSERT,UPDATE,DELETE ON NGUOIDUNG 
-                                  TO QuanTri
+                                  TO QUANTRI_ROLE

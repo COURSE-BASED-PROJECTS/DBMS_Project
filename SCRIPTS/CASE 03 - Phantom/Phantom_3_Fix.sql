@@ -1,7 +1,7 @@
 --Lấy danh sách chi nhánh của DOITAC
---CREATE 
-ALTER
-PROC USP_LayDSCN
+CREATE 
+--ALTER
+PROC USP_LayDSCN_FIX
     @MST CHAR(20)
 AS
 BEGIN TRAN
@@ -17,10 +17,10 @@ BEGIN TRAN
 						FROM CHINHANH
                         WHERE   MST = @MST)
 
-        SELECT @@SPID
+        /*SELECT @@SPID
         SELECT * FROM sys.dm_tran_locks
-        WHERE request_session_id = @@SPID
-
+        WHERE request_session_id = @@SPID*/
+		SELECT * FROM CHINHANH  WHERE  MST = @MST
 		WAITFOR DELAY '0:0:10'
 
 	    PRINT N'SỐ CHI NHÁNH CỦA ĐỐI TÁC: ' + @MST  + CAST(@SLCN AS VARCHAR(10))
