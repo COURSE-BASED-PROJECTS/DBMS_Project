@@ -73,7 +73,7 @@ public class DangNhap extends JFrame {
 	 * Create the frame.
 	 */
 	public DangNhap() {
-		setTitle("DANG NHAP");
+		setTitle("ĐĂNG NHẬP");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -99,7 +99,7 @@ public class DangNhap extends JFrame {
 			}
 		});
 		
-		JButton loginButton = new JButton("Dang nhap");
+		JButton loginButton = new JButton("Đăng Nhập");
 		loginButton.setBounds(174, 172, 86, 28);
 		desktopPane.add(loginButton);
 		loginButton.addActionListener(new ActionListener() {
@@ -108,12 +108,12 @@ public class DangNhap extends JFrame {
 			}
 		});
 		
-		JLabel lblNewLabel = new JLabel("Tai Khoan");
+		JLabel lblNewLabel = new JLabel("Tài Khoản");
 		lblNewLabel.setForeground(Color.WHITE);
 		lblNewLabel.setBounds(36, 49, 61, 26);
 		desktopPane.add(lblNewLabel);
 		
-		JLabel lblNewLabel_1 = new JLabel("Mat Khau");
+		JLabel lblNewLabel_1 = new JLabel("Mật Khẩu");
 		lblNewLabel_1.setForeground(Color.WHITE);
 		lblNewLabel_1.setBounds(36, 109, 61, 26);
 		desktopPane.add(lblNewLabel_1);
